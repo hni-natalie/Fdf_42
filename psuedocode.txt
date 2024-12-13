@@ -1,0 +1,209 @@
+My simple psuedocode 
+- only allow 2 argument
+- handle the second argv
+	- make sure it is with a fdf extension
+move the pointer to the last 4th letters  
+compare the last 4 words with ".fdf" 
+- read the file and take the info from the file
+- lastly, handle the window 
+
+int	main(int argc, char **argv)
+- error handling for number of arg
+- error handling for file type whether is it .fdf
+- handle the file by using handle_map(file) function
+- after taking x, y, z and color, we can begin mlx
+
+t_map	*handle_map(char *filename)
+- open the file and make sure it can be opened successfully
+- calloc is used to initialize to zero
+- find the width, we need to get the first line and split them and calculate how long is the width
+- find the length, go through all the line in file and calculate the length
+- then, we close the file and check for the colour and the height 
+- we need to allocate memory for z and color 
+- color will be after the comma, we need to change the hex to int by using atoi_base
+- close the file 
+* Here we will complete the t_map 
+
+In t_map, we need 
+- width 
+- length
+- z[][] 
+- color[][]
+- min_z & max_z to calculate the total height
+- iscolor **not sure how to use it
+
+In t_data, we need
+- void mlx
+- void win
+- t_map *map 
+
+t_data	*init_data(t_map *map)
+- manage t_data by assigning t_map into it
+- set the color_change to 0 **doesn't know why yet 
+
+void	free_map_mem(t_map *map)
+if there is something in the map->z
+while the map->z[i], free the arr one by one in z
+same as the color
+
+void	reset_default(t_data *fdf)
+- 
+
+MiniLibX
+- a library provides simple window creation
+- a questionable drawing tool
+- half-ass image functions
+
+Makefile
+./ means current directory
+-L flag with a compiler specifies the directory where the linker should search for libraries 
+-L is important when the .a file is not in the same directory
+-lft is need to specify which libraries to link against, and the linker will look for libft.a
+-I flag with a compiler specifics include directory for the preprocessor to search for header files (*.h)
+-I is important when we didn't include all those header in our .c files 
+
+wildcard function that returns a list of filenames that match a specified pattern 
+$(wildcard $(SRC_DIR)/*.c) will search for all .c files in the directory specified by $(SRC_DIR) 
+SRCS = $(wildcard $(SRC_DIR)/*.c) aka
+SRCS = src/main.c src/utils.c src/check_input.c \
+		src/label_index.c src/swap.c \
+		src/rotate.c src/reverse_rotate.c src/push_swap_algo.c \
+		src/push.c src/turk_algo.c src/turk_algo_2.c
+By using the function, we don't have to list out all the c files manually
+
+patsubst function performs a pattern substitution in a list of files 
+$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS)) takes each files in $(SRCS), replaces the .c extension
+with .o, and changes the directory from $(SRC_DIR) to $(OBJ_DIR)
+
+-lmlx
+-l : used to specify a library to link with 
+mlx : mlx refers to the library libmlx.a (without the prefix and file extension)
+
+-lm : link to the math library 
+Even though MiniLibX doesn't directly depend on the math library, MiniLibX still require for mathematical operations
+
+-lX11 : link against the X11 library 
+essential for interacting with X Window System 
+MiniLibX library uses X11 to create windows, handles events, and render graphics
+
+-lXext : link against Xext library, an extension to the X11 library
+provides additional functionally like window manipulation, input devices and image handling
+MiniLibX uses functions from Xext for some of its more advanced features
+This library provides extended X11 functionality that MiniLibX relies on
+
+In this Makefile, we will put all our .o file in a directory
+
+| $(OBJS_DIR) : $(OBJS_DIR) must exist before the rule is executed 
+
+MiniLibX functions
+1. void	*mlx_init(void); aka mlx pointer
+- Initialize the MiniLibX library and sets up the necessary resources
+- It returns a pointer to a new connection to the X server or NULL on failure
+
+2. void	*mlx_new_window(void *mlx_ptr, int width, int height, char *title)
+- creates a new window on the screen with the given dimensions and title
+- returns a pointer to the new window aka wibdow pointer
+
+3. void	mlx_clear_window(void *mlx_ptr, void *win_ptr)
+- clears the content of the window 
+
+4. void mlx_destroy_window(void *mlx_ptr, void *win_ptr)
+- destroys the window created by mlx_new_window()
+
+5. void *mlx_new_image(void *mlx_ptr, int width, int height)
+- creates a new image 
+- returns a pointer to the new image structure
+
+6. void mlx_destroy_image(void *mlx_ptr, void *img_ptr)
+- destroys an image structure created by mlx_new_image()
+- used to free the memory used by the image
+
+7. char	*mlx_get_data_addr(void *img_ptr, int *bpp, int *size_line, int	*endian)
+- bpp: bits per pixel
+- size_line: size of each line 
+- endian: endianess of the pixel data (order in which bytes are stored in computer memory)
+- retrieves the memory address of the image's pixel data
+- this is used to directly manipulate the image pixel
+
+Endian:
+- If *endian == 0, it means the image uses little-endian (the least significant byte is stored first)
+Pixel color values for green (0x00FF00) are stored in memory as 00 FF 00 00 (BGRA order)
+- If *endian == 1, it means the image uses big-endian (the most significant byte is stored first)
+Pixel color values are stored in memory as 00 00 FF 00 (ARGB order)
+
+8. void	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y)
+- puts an image into a window at the specified coordinates
+
+9. int	mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(), void *param)
+- sets up a hook(event listener) for an event in the window
+- the function allows you to handle different types of events such as key presses, mouse events, executed, etc 
+- x_event : Event type such as KeyPress, KeyRelease, ButtonPress, etc
+- x_mask : A bitmask used to filter out certain types of events 
+
+10. int mlx_mouse_hook(void	*win_ptr, int (*func)(), void *param)
+- This is similar to mlx_hook(), but it handles mouse events instead of keyboard events
+
+11. void mlx_loop(void *mlx_ptr)
+- starts the event loop, which processes events and keeps the window active 
+It should be called at the end of the program to begin processing events like key presses and mouse events
+
+12. void mlx_xpm_file_to_image(void *mlx_ptr, char **xpm_data, int *width, int *height)
+- Loads an XPM image file and converts it to a MiniLibX image
+- This function is useful for displaying images stored in XPM format
+
+Basic Setup
+1. Create our first window
+2. Handle events 
+In order to allow the window keep showing on the screen, we use mlx_loop function
+Clicking anywhere in the window with the mouse is an event and pressing a key is another
+Events are basically everything the user can do to interact with the program
+Before the mlx_loop function is called, we need to register events that are able to be triggered after the loop has started (aka hooks)
+
+t_data	data
+data.mlx_ptr : when data is a structure
+dot (.) is used to access its members directly
+Use a structure when 
+1. don't need dynamic memory allocation
+2. want automatic memory management
+3. structure is small and not going to be passed around or shared between different functions
+
+t_data *data
+data->mlx_ptr : when data is a pointer to a structure
+arrow (->) is used to dereference the pointer and access the structure's members
+Use a pointer when
+1. want to pass large structures efficiently 
+2. modify the structure in the function
+3. handle arrays of structures or variable numbers of structures
+
+Reason of using t_data object 
+1. As we are only able to pass a single void pointer 
+2. In order to pass multiple arguments, we obviously need a structure, in order to pass a pointer to this structure
+
+For example, 
+int	mlx_expose_hook (void *win_ptr, int (*funct_ptr)(), void *param);
+we are only allow to pass a single argument for the 3rd argument, so we need to a struct in order to return multiple arguments
+
+For keyboard events, we use both KeyPress and KeyRelease 
+KeyPress: This event is triggered when a key is pressed down 
+			We will use this hook to capture the key press and trigger actions such as moving an object
+KeyRelease: This hook can be useful to stop actions initiated by a key press, such as stopping movement 
+
+int	encode_rgb(uint8_t red, uint8_t green, uint8_t blue)
+{
+    return (red << 16 | green << 8 | blue);
+}
+<< leftshift the binary representation
+Red occupies the most significant 8 bits (16-23), so we shift it 16 bits to the left (<< 16)
+Green occupies the middle 8 bits (8-15), so we shift it 8 bits to the left (<< 8)
+Blue occupies the least significant (0-7) 
+Then, we combine them using the bitwise OR operator (|)
+
+Creating an image
+bpp : bits per pixel
+Since we are calculating in bytes so bpp / 8  
+line_len : the amount of bytes taken by one row of our image
+index = line_len * y_coordinate + x_coordinate * (bpp / 8)
+
+!! we don't straight away put pixel on the window
+!! we need to use pixel to create image and put it on the window
+In order to print color by using printf, we need ANSI escape code as ANSI escape code is designed specially for terminal control
