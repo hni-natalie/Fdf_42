@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:05:46 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/13 17:32:43 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:31:40 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 	t_map	*map;
 	
 	if (argc != 2 || (argc == 1 && !argv[1][0]))
-		exit_error("Error: Incorrect Number of argument.");
+		exit_error("Error: Incorrect number of argument.");
 	len = ft_strlen(argv[1]);
 	if (ft_strncmp(argv[1] + (len - 4), ".fdf", 4) != 0)
 		exit_error("Error: Incorrect File Type. <map>.fdf");
@@ -37,7 +37,7 @@ t_map	*handle_map(char *file)
 		exit_error("Error: File Can't be Opened.");
 	map = ft_calloc(1, sizeof(t_map)); 
 	if (!map)
-		exit_error("Error: Fail to allocate memory");
+		exit_error("Error: Fail to allocate memory for t_map");
 	find_area(fd, map);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -66,12 +66,11 @@ void	get_height_color(int fd, t_map *map)
 		{
 			map->height[x][y] = min_max_z(ft_atoi(z_cor[y]), map);
 			map->color[x][y] = convert_hex_color(z_cor[y]);
-			// printf("%d ", map->color[x][y]); //debug
+			printf("%d ", map->color[x][y]); //debug
 		}
 		free(line);
 		free_arr(z_cor);
 	}
-	// get_next_line(fd);
 }
 
 int	convert_hex_color(char *color)
@@ -79,11 +78,8 @@ int	convert_hex_color(char *color)
 	while (ft_isdigit(*color) || *color == '-' || *color == '+'
 		|| *color == ',')
 		color++;
-	if (*color == 'x')
-	{
-		color++;
+	if (*color++ == 'x')
 		return (ft_atoi_base(color, HEXA_BASE));
-	}
 	return (WHITE);
 }
 
@@ -130,22 +126,22 @@ void	find_area(int fd, t_map *map)
 	i = -1;
 	line = get_next_line(fd);
 	x_axis = ft_split(line, ' ');
-	if (!x_axis || !*x_axis)
+	if (!x_axis || !*x_axis || !x_axis[0] || !x_axis[1])
 	{
 		free_mem(map);
-		exit_error("Error: Empty File. ");
+		exit_error("Error: Empty & Invalid File.");
 	}
 	while(x_axis[++i])
 		map->columns++;
 	free_arr(x_axis);
-	printf("columns = %d\n", map->columns); //debug
+	// printf("columns = %d\n", map->columns); //debug
 	while (line)
 	{
 		map->rows++;
 		free(line);
 		line = get_next_line(fd);
 	}
-	printf("rows = %d\n", map->rows); // debug
+	// printf("rows = %d\n", map->rows); // debug
 	free(line);
 	close(fd);
 }
