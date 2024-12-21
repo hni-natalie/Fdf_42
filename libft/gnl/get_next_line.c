@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:01:08 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/13 17:41:47 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:12:18 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*read_line(int fd, char *current)
 	ssize_t	read_check;
 
 	read_check = INT_MAX;
-	line = gnl_ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	line = malloc(BUFFER_SIZE + 1 * sizeof(char));
 	while (read_check > 0 && !gnl_ft_strchr(current, '\n'))
 	{
 		read_check = read(fd, line, BUFFER_SIZE);
@@ -68,9 +68,9 @@ char	*rest_of_line(char *line)
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 		i++;
-	if (!line[i])
+	if (!line[i] || !line[i + 1])
 		return (free(line), NULL);
-	remainder = gnl_ft_calloc((gnl_ft_strlen(line) - i), sizeof(char));
+	remainder = malloc((gnl_ft_strlen(line) - i) * sizeof(char));
 	i++;
 	j = 0;
 	while (line[i])

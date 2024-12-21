@@ -6,7 +6,7 @@
 #    By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 09:26:38 by hni-xuan          #+#    #+#              #
-#    Updated: 2024/12/13 16:07:30 by hni-xuan         ###   ########.fr        #
+#    Updated: 2024/12/21 10:52:01 by hni-xuan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ LIBFT_DIR = ./libft
 MLX_DIR = ./minilibx-linux
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
 
-SRCS_FILES = main utils
+SRCS_FILES = main utils handle_map handle_mlx color bresenham_algo \
+				adjustment transformation 
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(SRCS_FILES)))
