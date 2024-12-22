@@ -16,9 +16,7 @@ void	find_area(int fd, t_map *map)
 {
 	char	*line;
 	char	**x_axis;
-	int		i;
 
-	i = -1;
 	line = get_next_line(fd);
 	x_axis = ft_split(line, ' ');
 	if (!x_axis || !*x_axis)

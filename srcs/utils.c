@@ -100,5 +100,5 @@ int	ft_atoi_base(char *color, char *base)
 		else
 			num = num * ft_strlen(base) + (ft_toupper(*color++) - 55);
 	}
-	return (num);
+	return (num * neg);
 }
