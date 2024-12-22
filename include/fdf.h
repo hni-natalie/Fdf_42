@@ -13,8 +13,8 @@
 #ifndef FDF_H
 # define FDF_H
 
-# define W_WIDTH 2000
-# define W_HEIGHT 1200
+# define W_WIDTH 1600
+# define W_HEIGHT 800
 # define MLX_ERROR 1
 
 # include "../libft/libft.h"

@@ -32,8 +32,8 @@ void	set_default(t_data *data)
 {
 	data->zoom = ft_greater((W_WIDTH / data->map->columns / 2),
 			(W_HEIGHT / data->map->rows / 2));
-	data->shift_x = W_WIDTH / 2;
-	data->shift_y = (W_HEIGHT - (data->map->rows * data->zoom)) / 2;
+	data->shift_x = (W_WIDTH - (data->map->columns * data->zoom));
+	data->shift_y = (W_HEIGHT - (data->map->rows * data->zoom)) / 4;
 	data->rot_x = 0;
 	data->rot_y = 0;
 	data->rot_z = 0;
