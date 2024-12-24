@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:54:13 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/21 11:44:14 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:48:48 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,15 @@ int	cal_color(t_data *data, int height)
 			data->map->max_height, height);
 	if (data->change_color)
 	{
-		if (percentage < 0.7)
+		if (percentage < 0.5)
 			return (M_PINK);
 		else
 			return (M_PURPLE);
 	}
 	else
 	{
-		if (percentage < 0.1)
+		if (percentage < 0.5)
 			return (M_PURPLE);
-		else if (percentage < 0.7)
-			return (WHITE);
 		else
 			return (M_PINK);
 	}
@@ -55,8 +53,6 @@ int	get_color(t_point start, t_point end, t_point delta)
 	int		g;
 	float	percent;
 
-	if (start.color == end.color)
-		return (start.color);
 	if (delta.x > delta.y)
 		percent = color_percentage(start.x, end.x, start.x);
 	else

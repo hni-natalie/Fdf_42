@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:05:46 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/21 11:52:48 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:01:35 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,31 @@ void	execute_mlx(t_map *map)
 
 	data = init_data(map);
 	init_mlx(data);
-	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, &handle_keypress, data);
-	mlx_hook(data->win_ptr, DestroyNotify, 0, &close_window, data);
+	mlx_hook(data->win_ptr, 2, (1L << 0), &handle_keypress, data);
+	mlx_hook(data->win_ptr, 17, 0, &close_window, data);
 	draw_map(data);
 	mlx_loop(data->mlx_ptr);
 }
 
 int	handle_keypress(int keycode, t_data *data)
 {
-	if (keycode == XK_Escape)
+	if (keycode == XK_ESCAPE)
 		close_window(data);
-	else if (keycode == XK_BackSpace)
+	else if (keycode == XK_BACKSPACE)
 		set_default(data);
-	else if (keycode == XK_Tab)
+	else if (keycode == XK_TAB)
 		data->isometric = !(data->isometric);
-	else if (keycode == XK_Shift_R || keycode == XK_Return)
+	else if (keycode == XK_SHIFT_R || keycode == XK_RETURN)
 		zoom_in_out(keycode, data);
-	else if (keycode == XK_space)
+	else if (keycode == XK_SPACE)
 		data->change_color = !(data->change_color);
 	else if (keycode == XK_9 || keycode == XK_0)
 		adjust_alt(keycode, data);
 	else if (keycode == XK_1 || keycode == XK_2 || keycode == XK_3
 		|| keycode == XK_4 || keycode == XK_5 || keycode == XK_6)
 		rotation(keycode, data);
-	else if (keycode == XK_Up || keycode == XK_Down || keycode == XK_Left
-		|| keycode == XK_Right)
+	else if (keycode == XK_UP || keycode == XK_DOWN || keycode == XK_LEFT
+		|| keycode == XK_RIGHT)
 		translation(keycode, data);
 	draw_map(data);
 	return (0);

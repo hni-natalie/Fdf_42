@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:46:31 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/21 11:48:54 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/21 22:12:25 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	free_mem(t_map *map)
 {
 	int	i;
 
-	if (!map)
-		return ;
 	if (map->height)
 	{
 		i = -1;
@@ -47,9 +45,7 @@ void	free_mem(t_map *map)
 
 void	exit_error(char *msg)
 {
-	ft_printf("%s", RED);
-	ft_printf(msg);
-	ft_printf("\n");
+	ft_printf("%s%s\n", RED, msg);
 	ft_printf("%s", RESET_COLOR);
 	exit(1);
 }
@@ -100,5 +96,5 @@ int	ft_atoi_base(char *color, char *base)
 		else
 			num = num * ft_strlen(base) + (ft_toupper(*color++) - 55);
 	}
-	return (num * neg);
+	return (num);
 }

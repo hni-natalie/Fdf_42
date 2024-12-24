@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:58:20 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/21 11:52:05 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:05:18 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ void	bresenham(t_data *data, t_point start, t_point end)
 	{
 		put_pixel(data, start.x, start.y, get_color(start, end, delta));
 		tmp = error * 2;
-		if (tmp > delta.y)
+		if (tmp >= delta.y)
 		{
 			error += delta.y;
 			start.x += sign.x;
 		}
-		if (tmp < delta.x)
+		if (tmp <= delta.x)
 		{
 			error += delta.x;
 			start.y += sign.y;
