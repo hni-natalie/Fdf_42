@@ -6,7 +6,7 @@
 /*   By: hni-xuan <hni-xuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:04:33 by hni-xuan          #+#    #+#             */
-/*   Updated: 2024/12/21 21:59:22 by hni-xuan         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:58:05 by hni-xuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ void	find_area(int fd, t_map *map)
 	i = -1;
 	line = get_next_line(fd);
 	x_axis = ft_split(line, ' ');
+	while (line)
+	{
+		map->rows++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
 	if (!x_axis || !*x_axis)
 	{
 		free(line);
@@ -29,13 +36,6 @@ void	find_area(int fd, t_map *map)
 	}
 	find_width(line, x_axis, map);
 	free_arr(x_axis);
-	while (line)
-	{
-		map->rows++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
 	close(fd);
 }
 
